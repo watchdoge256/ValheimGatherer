@@ -10,6 +10,7 @@ namespace ValheimGatherer.Configuration
     {
         // 0 - General
         public ConfigEntry<bool> Enabled { get; private set; }
+        public ConfigEntry<UnityEngine.KeyCode> ToggleUiKey { get; private set; }
         public ConfigEntry<DiscoveryMode> Mode { get; private set; }
         public ConfigEntry<bool> ShareOnCartographyTable { get; private set; }
         public ConfigEntry<bool> ShowHudNotification { get; private set; }
@@ -93,6 +94,8 @@ namespace ValheimGatherer.Configuration
             // 0 - General
             Enabled = config.Bind("0 - General", "Enabled", true,
                 "Master switch to enable or disable the Gatherer mod.");
+            ToggleUiKey = config.Bind("0 - General", "ToggleUiKey", UnityEngine.KeyCode.F8,
+                "Keyboard shortcut to open and close the interactive in-game Gatherer resource tracking menu (Default: F8).");
             Mode = config.Bind("0 - General", "DiscoveryMode", DiscoveryMode.InteractAndProximity,
                 "Discovery mode: InteractOnly (when picked/mined), InteractAndProximity (auto-marks nearby nodes), InteractAndHover (when looking at nodes), or All.");
             ShareOnCartographyTable = config.Bind("0 - General", "ShareOnCartographyTable", true,

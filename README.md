@@ -133,8 +133,9 @@ Gatherer checks whether an object was cultivated or constructed by a player (`Pi
 
 ### How to Access the Config
 
+- **In-Game Interactive Menu (Built-in!):** Press **`F8`** anytime in-game to open Gatherer's custom interactive GUI. You can toggle resources, categories, radar ranges, and cartography sharing with real-time effect! (The keybind is rebindable via `ToggleUiKey`).
 - **Inside r2modman:** Click **Configuration editor** in the left sidebar, find `com.watchdoge.valheim.gatherer.cfg`, and click **Edit Config**.
-- **In-Game (via BepInEx ConfigurationManager):** Press `F1` while in-game (if installed) to modify settings live with instant effect.
+- **In-Game (via BepInEx ConfigurationManager):** Press **`F1`** while in-game (if installed) to modify settings live.
 - **Manual File:** Found at `<ValheimRoot>\BepInEx\config\com.watchdoge.valheim.gatherer.cfg`.
 
 ### Common Configuration Scenarios
@@ -185,6 +186,7 @@ ProximityScanInterval = 1.5
 | Key | Type | Default | Description |
 |---|---|---|---|
 | `Enabled` | Boolean | `true` | Master switch for the mod. |
+| `ToggleUiKey` | KeyCode | `F8` | Hotkey to open/close the interactive in-game resource configuration window. |
 | `DiscoveryMode` | Enum | `InteractAndProximity` | Detection trigger (`InteractOnly`, `InteractAndProximity`, `InteractAndHover`, `All`). |
 | `ShareOnCartographyTable` | Boolean | `true` | Saves pins with sync flag enabled for Cartography Table distribution. |
 | `ShowHudNotification` | Boolean | `true` | Displays `[Gatherer] Marked <Resource>` in top-left HUD. |

@@ -3,6 +3,7 @@ using BepInEx;
 using HarmonyLib;
 using ValheimGatherer.Configuration;
 using ValheimGatherer.Core;
+using ValheimGatherer.UI;
 
 namespace ValheimGatherer
 {
@@ -22,6 +23,7 @@ namespace ValheimGatherer
             GathererManager.Instance.Initialize(ModConfig, Logger);
 
             gameObject.AddComponent<ProximityScanner>();
+            GathererInGameUI.Attach(gameObject);
 
             _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PluginGUID);
 
