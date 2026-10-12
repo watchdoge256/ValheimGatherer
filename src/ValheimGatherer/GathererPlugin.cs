@@ -12,7 +12,7 @@ namespace ValheimGatherer
     {
         public const string PluginGUID = "com.watchdoge.valheim.gatherer";
         public const string PluginName = "Gatherer";
-        public const string PluginVersion = "1.0.0";
+        public const string PluginVersion = "1.1.0";
 
         private Harmony? _harmony;
         public static GathererConfig? ModConfig { get; private set; }
