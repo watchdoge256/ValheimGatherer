@@ -1,0 +1,20 @@
+# Build outputs
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Packages
+*.nupkg
+packages/
+
+# Thunderstore zip output
+thunderstore/package/
+*.zip
+
+# VS Code / Rider
+.vs/
+.idea/
+.vscode/

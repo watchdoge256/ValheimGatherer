@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5E67E701-BC56-44E6-8010-5695A13F6463}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValheimGatherer", "src\ValheimGatherer\ValheimGatherer.csproj", "{792E9016-FB36-4018-ABD5-039023C91CC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9EAB03CC-C346-470B-8F14-4C8F0E178900}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValheimGatherer.Tests", "tests\ValheimGatherer.Tests\ValheimGatherer.Tests.csproj", "{7C5D3D16-AE9F-4950-9057-9AAE69D602C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{792E9016-FB36-4018-ABD5-039023C91CC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792E9016-FB36-4018-ABD5-039023C91CC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792E9016-FB36-4018-ABD5-039023C91CC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792E9016-FB36-4018-ABD5-039023C91CC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C5D3D16-AE9F-4950-9057-9AAE69D602C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C5D3D16-AE9F-4950-9057-9AAE69D602C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C5D3D16-AE9F-4950-9057-9AAE69D602C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C5D3D16-AE9F-4950-9057-9AAE69D602C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{792E9016-FB36-4018-ABD5-039023C91CC5} = {5E67E701-BC56-44E6-8010-5695A13F6463}
+		{7C5D3D16-AE9F-4950-9057-9AAE69D602C0} = {9EAB03CC-C346-470B-8F14-4C8F0E178900}
+	EndGlobalSection
+EndGlobal

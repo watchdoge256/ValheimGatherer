@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <!-- Default search paths for local development -->
+    <ValheimPath Condition="'$(ValheimPath)' == '' and Exists('S:\steam\steamapps\common\Valheim')">S:\steam\steamapps\common\Valheim</ValheimPath>
+    <ValheimPath Condition="'$(ValheimPath)' == '' and Exists('C:\Program Files (x86)\Steam\steamapps\common\Valheim')">C:\Program Files (x86)\Steam\steamapps\common\Valheim</ValheimPath>
+    
+    <ValheimManaged Condition="'$(ValheimManaged)' == '' and Exists('$(ValheimPath)\valheim_Data\Managed')">$(ValheimPath)\valheim_Data\Managed</ValheimManaged>
+
+    <BepInExCore Condition="'$(BepInExCore)' == '' and Exists('C:\Users\amiar\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\magiczna-3.0\BepInEx\core')">C:\Users\amiar\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\magiczna-3.0\BepInEx\core</BepInExCore>
+    <BepInExCore Condition="'$(BepInExCore)' == '' and Exists('$(ValheimPath)\BepInEx\core')">$(ValheimPath)\BepInEx\core</BepInExCore>
+  </PropertyGroup>
+
+  <!-- Allow local developer overrides via Directory.Build.props.user -->
+  <Import Project="Directory.Build.props.user" Condition="Exists('Directory.Build.props.user')" />
+</Project>
