@@ -4,6 +4,6 @@
   "website_url": "https://github.com/watchdoge256/ValheimGatherer",
   "description": "WoW 3.3.5a style Gatherer mod for Valheim. Automatically tracks gathered & discovered resource nodes, highly configurable (e.g. mark mushrooms but not copper), and shareable via Cartography Table.",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.2202"
+    "denikson-BepInExPack_Valheim-5.4.2351"
   ]
 }
