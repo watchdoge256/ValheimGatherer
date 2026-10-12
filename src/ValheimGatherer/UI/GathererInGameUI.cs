@@ -10,6 +10,7 @@ namespace ValheimGatherer.UI
     {
         private static GathererInGameUI? _instance;
         public static GathererInGameUI? Instance => _instance;
+        public static bool IsMenuOpen => _instance != null && _instance._isOpen;
 
         private bool _isOpen = false;
         private Rect _windowRect = new Rect(80, 80, 720, 520);
@@ -62,6 +63,14 @@ namespace ValheimGatherer.UI
                 _isOpen = false;
                 TakeInputFocus(false);
             }
+
+            if (_isOpen)
+            {
+                ZCursor.LockState = CursorLockMode.None;
+                ZCursor.Show();
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
         }
 
         public void ToggleMenu()
@@ -74,15 +83,18 @@ namespace ValheimGatherer.UI
         {
             if (focus)
             {
-                // Unlock cursor so the player can interact with the menu
+                ZCursor.LockState = CursorLockMode.None;
+                ZCursor.Show();
                 Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
             }
             else
             {
                 // Restore game camera control if no other game menu is open
-                if (Player.m_localPlayer != null && !Menu.IsVisible() && !InventoryGui.IsVisible())
+                if (Player.m_localPlayer != null && !Menu.IsVisible() && !InventoryGui.IsVisible() && !Minimap.IsOpen())
                 {
+                    ZCursor.LockState = CursorLockMode.Locked;
+                    ZCursor.Hide();
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
@@ -155,6 +167,11 @@ namespace ValheimGatherer.UI
         {
             if (!_isOpen) return;
 
+            ZCursor.LockState = CursorLockMode.None;
+            ZCursor.Show();
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
             InitStyles();
 
             _windowRect = GUI.Window(
@@ -163,6 +180,8 @@ namespace ValheimGatherer.UI
                 DrawWindowContents,
                 "Gatherer - Resource Tracking Menu",
                 _winStyle);
+
+            GUI.BringWindowToFront(9928374);
         }
 
         private void DrawWindowContents(int windowId)
@@ -219,106 +238,127 @@ namespace ValheimGatherer.UI
         private void DrawResourcesTab(GathererConfig config)
         {
             GUILayout.Label("Categories & Specific Resource Toggles", _headerStyle);
-            GUILayout.Label("Toggle entire categories or individual resources below. Changes apply instantly in real-time.", _labelStyle);
+            GUILayout.Label("Select the resources you want to track below. All resources are disabled by default until selected.", _labelStyle);
 
             GUILayout.Space(6);
 
             // Mushrooms Section
-            DrawCategoryHeader("Mushrooms", config.TrackMushrooms);
-            if (config.TrackMushrooms.Value)
+            DrawCategoryHeader("Mushrooms", config.TrackMushrooms, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkRedMushroom, "Red Mushroom");
-                DrawToggle(config.MarkYellowMushroom, "Yellow Mushroom");
-                DrawToggle(config.MarkBlueMushroom, "Blue Mushroom");
-                GUILayout.EndHorizontal();
+                config.MarkRedMushroom.Value = val;
+                config.MarkYellowMushroom.Value = val;
+                config.MarkBlueMushroom.Value = val;
+                config.MarkMagecap.Value = val;
+                config.MarkJotunPuffs.Value = val;
+                config.MarkSmokePuff.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkRedMushroom, "Red Mushroom", config.TrackMushrooms);
+            DrawToggle(config.MarkYellowMushroom, "Yellow Mushroom", config.TrackMushrooms);
+            DrawToggle(config.MarkBlueMushroom, "Blue Mushroom", config.TrackMushrooms);
+            GUILayout.EndHorizontal();
 
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkMagecap, "Magecap (Mistlands)");
-                DrawToggle(config.MarkJotunPuffs, "Jotun Puffs (Mistlands)");
-                DrawToggle(config.MarkSmokePuff, "Smoke Puff (Ashlands)");
-                GUILayout.EndHorizontal();
-            }
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkMagecap, "Magecap (Mistlands)", config.TrackMushrooms);
+            DrawToggle(config.MarkJotunPuffs, "Jotun Puffs (Mistlands)", config.TrackMushrooms);
+            DrawToggle(config.MarkSmokePuff, "Smoke Puff (Ashlands)", config.TrackMushrooms);
+            GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
 
             // Berries Section
-            DrawCategoryHeader("Berries", config.TrackBerries);
-            if (config.TrackBerries.Value)
+            DrawCategoryHeader("Berries", config.TrackBerries, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkRaspberry, "Raspberries");
-                DrawToggle(config.MarkBlueberry, "Blueberries");
-                DrawToggle(config.MarkCloudberry, "Cloudberries");
-                GUILayout.EndHorizontal();
-            }
+                config.MarkRaspberry.Value = val;
+                config.MarkBlueberry.Value = val;
+                config.MarkCloudberry.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkRaspberry, "Raspberries", config.TrackBerries);
+            DrawToggle(config.MarkBlueberry, "Blueberries", config.TrackBerries);
+            DrawToggle(config.MarkCloudberry, "Cloudberries", config.TrackBerries);
+            GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
 
             // Herbs & Plants Section
-            DrawCategoryHeader("Herbs & Wild Plants", config.TrackHerbsAndPlants);
-            if (config.TrackHerbsAndPlants.Value)
+            DrawCategoryHeader("Herbs & Wild Plants", config.TrackHerbsAndPlants, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkThistle, "Thistle");
-                DrawToggle(config.MarkDandelion, "Dandelion");
-                DrawToggle(config.MarkCarrotSeeds, "Carrot Seeds");
-                GUILayout.EndHorizontal();
+                config.MarkThistle.Value = val;
+                config.MarkDandelion.Value = val;
+                config.MarkCarrotSeeds.Value = val;
+                config.MarkTurnipSeeds.Value = val;
+                config.MarkOnionSeeds.Value = val;
+                config.MarkFiddlehead.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkThistle, "Thistle", config.TrackHerbsAndPlants);
+            DrawToggle(config.MarkDandelion, "Dandelion", config.TrackHerbsAndPlants);
+            DrawToggle(config.MarkCarrotSeeds, "Carrot Seeds", config.TrackHerbsAndPlants);
+            GUILayout.EndHorizontal();
 
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkTurnipSeeds, "Turnip Seeds");
-                DrawToggle(config.MarkOnionSeeds, "Onion Seeds");
-                DrawToggle(config.MarkFiddlehead, "Fiddlehead (Ashlands)");
-                GUILayout.EndHorizontal();
-            }
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkTurnipSeeds, "Turnip Seeds", config.TrackHerbsAndPlants);
+            DrawToggle(config.MarkOnionSeeds, "Onion Seeds", config.TrackHerbsAndPlants);
+            DrawToggle(config.MarkFiddlehead, "Fiddlehead (Ashlands)", config.TrackHerbsAndPlants);
+            GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
 
             // Farming Crops Section
-            DrawCategoryHeader("Farming Crops (Wild)", config.TrackFarmingCrops);
-            if (config.TrackFarmingCrops.Value)
+            DrawCategoryHeader("Farming Crops (Wild)", config.TrackFarmingCrops, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkBarley, "Barley");
-                DrawToggle(config.MarkFlax, "Flax");
-                GUILayout.EndHorizontal();
-            }
+                config.MarkBarley.Value = val;
+                config.MarkFlax.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkBarley, "Barley", config.TrackFarmingCrops);
+            DrawToggle(config.MarkFlax, "Flax", config.TrackFarmingCrops);
+            GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
 
             // Ores & Veins Section
-            DrawCategoryHeader("Ores & Mineral Veins", config.TrackOresAndVeins);
-            if (config.TrackOresAndVeins.Value)
+            DrawCategoryHeader("Ores & Mineral Veins", config.TrackOresAndVeins, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkCopper, "Copper Deposit");
-                DrawToggle(config.MarkTin, "Tin Deposit");
-                DrawToggle(config.MarkSilver, "Silver Vein");
-                GUILayout.EndHorizontal();
+                config.MarkCopper.Value = val;
+                config.MarkTin.Value = val;
+                config.MarkSilver.Value = val;
+                config.MarkIronMudpile.Value = val;
+                config.MarkObsidian.Value = val;
+                config.MarkFlametal.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkCopper, "Copper Deposit", config.TrackOresAndVeins);
+            DrawToggle(config.MarkTin, "Tin Deposit", config.TrackOresAndVeins);
+            DrawToggle(config.MarkSilver, "Silver Vein", config.TrackOresAndVeins);
+            GUILayout.EndHorizontal();
 
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkIronMudpile, "Muddy Scrap Pile (Iron)");
-                DrawToggle(config.MarkObsidian, "Obsidian");
-                DrawToggle(config.MarkFlametal, "Flametal (Ashlands)");
-                GUILayout.EndHorizontal();
-            }
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkIronMudpile, "Muddy Scrap Pile (Iron)", config.TrackOresAndVeins);
+            DrawToggle(config.MarkObsidian, "Obsidian", config.TrackOresAndVeins);
+            DrawToggle(config.MarkFlametal, "Flametal (Ashlands)", config.TrackOresAndVeins);
+            GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
 
             // Special POIs Section
-            DrawCategoryHeader("Special POIs & Beehives", config.TrackSpecial);
-            if (config.TrackSpecial.Value)
+            DrawCategoryHeader("Special POIs & Beehives", config.TrackSpecial, val =>
             {
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkBeehive, "Wild Beehives");
-                DrawToggle(config.MarkVegvisir, "Vegvisir Runestones");
-                GUILayout.EndHorizontal();
+                config.MarkBeehive.Value = val;
+                config.MarkVegvisir.Value = val;
+                config.MarkSurtlingSpawner.Value = val;
+                config.MarkAncientRoot.Value = val;
+            });
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkBeehive, "Wild Beehives", config.TrackSpecial);
+            DrawToggle(config.MarkVegvisir, "Vegvisir Runestones", config.TrackSpecial);
+            GUILayout.EndHorizontal();
 
-                GUILayout.BeginHorizontal();
-                DrawToggle(config.MarkSurtlingSpawner, "Surtling Spawners");
-                DrawToggle(config.MarkAncientRoot, "Ancient Roots (Sap)");
-                GUILayout.EndHorizontal();
-            }
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkSurtlingSpawner, "Surtling Spawners", config.TrackSpecial);
+            DrawToggle(config.MarkAncientRoot, "Ancient Roots (Sap)", config.TrackSpecial);
+            GUILayout.EndHorizontal();
         }
 
         private void DrawGeneralSettingsTab(GathererConfig config)
@@ -391,22 +431,44 @@ namespace ValheimGatherer.UI
             GUILayout.Label("Comma-separated prefab names to ALWAYS mark even from other mods (e.g. 'DragonEgg, GoblinTotem').", _labelStyle);
         }
 
-        private void DrawCategoryHeader(string title, BepInEx.Configuration.ConfigEntry<bool> entry)
+        private void DrawCategoryHeader(string title, BepInEx.Configuration.ConfigEntry<bool> entry, Action<bool>? onToggleAll = null)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Label(title, _sectionStyle);
             GUILayout.FlexibleSpace();
-            entry.Value = GUILayout.Toggle(entry.Value, entry.Value ? "Category Enabled" : "Category Disabled", _toggleStyle);
+            bool newCat = GUILayout.Toggle(entry.Value, entry.Value ? "Category: ON " : "Category: OFF", _toggleStyle);
+            if (newCat != entry.Value)
+            {
+                entry.Value = newCat;
+                onToggleAll?.Invoke(newCat);
+            }
             GUILayout.EndHorizontal();
         }
 
-        private void DrawToggle(BepInEx.Configuration.ConfigEntry<bool> entry, string label)
+        private void DrawToggle(BepInEx.Configuration.ConfigEntry<bool> entry, string label, BepInEx.Configuration.ConfigEntry<bool>? parentCategory = null)
         {
-            entry.Value = GUILayout.Toggle(entry.Value, " " + label, _toggleStyle, GUILayout.Width(210));
+            bool cur = entry.Value;
+            bool next = GUILayout.Toggle(cur, " " + label, _toggleStyle, GUILayout.Width(210));
+            if (next != cur)
+            {
+                entry.Value = next;
+                if (next && parentCategory != null && !parentCategory.Value)
+                {
+                    parentCategory.Value = true;
+                }
+            }
         }
 
         private void SetAllResources(GathererConfig config, bool val)
         {
+            config.TrackMushrooms.Value = val;
+            config.TrackBerries.Value = val;
+            config.TrackHerbsAndPlants.Value = val;
+            config.TrackFarmingCrops.Value = val;
+            config.TrackOresAndVeins.Value = val;
+            config.TrackBeehives.Value = val;
+            config.TrackSpecial.Value = val;
+
             config.MarkRedMushroom.Value = val;
             config.MarkYellowMushroom.Value = val;
             config.MarkBlueMushroom.Value = val;

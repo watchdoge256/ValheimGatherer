@@ -32,7 +32,7 @@ namespace ValheimGatherer.Tests
         }
 
         [Fact]
-        public void Config_ToggleSpecificResource_MushroomVsCopper()
+        public void Config_DefaultsAreDisabled_PlayerEnablesSelectively()
         {
             string tempConfigPath = Path.Combine(Path.GetTempPath(), $"Gatherer_Test_{Path.GetRandomFileName()}.cfg");
             try
@@ -40,18 +40,19 @@ namespace ValheimGatherer.Tests
                 var configFile = new ConfigFile(tempConfigPath, true);
                 var config = new GathererConfig(configFile);
 
-                // Default: both mushrooms and copper are true
+                // Default: all categories and resources are disabled by default
                 var mushroomDef = ResourceRegistry.Match("Pickable_Mushroom", "", "");
                 var copperDef = ResourceRegistry.Match("rock4_copper", "", "");
 
                 Assert.NotNull(mushroomDef);
                 Assert.NotNull(copperDef);
 
-                Assert.True(ResourceRegistry.IsEnabled(mushroomDef, config));
-                Assert.True(ResourceRegistry.IsEnabled(copperDef, config));
+                Assert.False(ResourceRegistry.IsEnabled(mushroomDef, config));
+                Assert.False(ResourceRegistry.IsEnabled(copperDef, config));
 
-                // User preference: "I would like to mark mushrooms but not copper"
-                config.MarkCopper.Value = false;
+                // Player preference: "I would like to mark mushrooms but not copper"
+                config.TrackMushrooms.Value = true;
+                config.MarkRedMushroom.Value = true;
 
                 Assert.True(ResourceRegistry.IsEnabled(mushroomDef, config));
                 Assert.False(ResourceRegistry.IsEnabled(copperDef, config));
@@ -75,7 +76,9 @@ namespace ValheimGatherer.Tests
                 var copperDef = ResourceRegistry.Match("rock4_copper", "", "");
                 Assert.NotNull(copperDef);
 
-                // Initially enabled
+                // Enable ores category & copper
+                config.TrackOresAndVeins.Value = true;
+                config.MarkCopper.Value = true;
                 Assert.True(ResourceRegistry.IsEnabled(copperDef, config));
 
                 // Add Copper to custom exclude filter
@@ -107,6 +110,12 @@ namespace ValheimGatherer.Tests
                 Assert.NotNull(tinDef);
                 Assert.NotNull(silverDef);
 
+                // Enable all ores
+                config.TrackOresAndVeins.Value = true;
+                config.MarkCopper.Value = true;
+                config.MarkTin.Value = true;
+                config.MarkSilver.Value = true;
+
                 Assert.True(ResourceRegistry.IsEnabled(copperDef!, config));
                 Assert.True(ResourceRegistry.IsEnabled(tinDef!, config));
                 Assert.True(ResourceRegistry.IsEnabled(silverDef!, config));
@@ -118,7 +127,9 @@ namespace ValheimGatherer.Tests
                 Assert.False(ResourceRegistry.IsEnabled(tinDef!, config));
                 Assert.False(ResourceRegistry.IsEnabled(silverDef!, config));
 
-                // Mushrooms should still be enabled
+                // Enable mushrooms
+                config.TrackMushrooms.Value = true;
+                config.MarkRedMushroom.Value = true;
                 var mushroomDef = ResourceRegistry.Match("Pickable_Mushroom", "", "");
                 Assert.NotNull(mushroomDef);
                 Assert.True(ResourceRegistry.IsEnabled(mushroomDef!, config));

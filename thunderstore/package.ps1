@@ -1,5 +1,5 @@
 param (
-    [string]$Version = "1.1.0",
+    [string]$Version = "1.2.0",
     [string]$Configuration = "Release"
 )
 
@@ -10,6 +10,17 @@ $rootDir = Resolve-Path "$scriptDir\.."
 $srcDir = "$rootDir\src\ValheimGatherer"
 $outDir = "$scriptDir\package"
 $zipPath = "$rootDir\Gatherer-$Version.zip"
+$thunderstoreZipPath = "$rootDir\Thunderstore-Gatherer-$Version.zip"
+$readmePath = "$rootDir\README.md"
+$readme = Get-Content $readmePath -Raw
+$manualMatch = [regex]::Match($readme, '(?s)## Local-import manual\s+(.*?)\r?\n---')
+if (!$manualMatch.Success) {
+    throw "README.md is missing the Local-import manual section."
+}
+$manifest = Get-Content "$scriptDir\manifest.json" -Raw | ConvertFrom-Json
+if ($manifest.version_number -ne $Version) {
+    throw "Package version must match manifest.json."
+}
 
 Write-Host "=== Packaging Gatherer v$Version for Thunderstore / r2modman ===" -ForegroundColor Cyan
 
@@ -38,7 +49,8 @@ if (Test-Path "$binDir\ValheimGatherer.pdb") {
 # Copy package metadata
 Copy-Item "$scriptDir\manifest.json" "$outDir\" -Force
 Copy-Item "$scriptDir\icon.png" "$outDir\" -Force
-Copy-Item "$scriptDir\README.md" "$outDir\" -Force
+Copy-Item $readmePath "$scriptDir\README.md" -Force
+Copy-Item $readmePath "$outDir\" -Force
 
 # 3. Create zip
 if (Test-Path $zipPath) {
@@ -46,10 +58,23 @@ if (Test-Path $zipPath) {
 }
 
 Write-Host "Creating zip: $zipPath..."
+# Preserve the short description for Thunderstore's metadata limits.
+Compress-Archive -Path "$outDir\*" -DestinationPath $thunderstoreZipPath -Force
+
+# Local imports display manifest.description, not the bundled Markdown README.
+$manifest.description = ($manualMatch.Groups[1].Value.Trim() -replace '\s+', ' ')
+$manifest | Add-Member -NotePropertyName author -NotePropertyValue "Imbrus_Chrapmajster"
+$manifest | ConvertTo-Json -Depth 10 | Set-Content "$outDir\manifest.json" -Encoding UTF8
 Compress-Archive -Path "$outDir\*" -DestinationPath $zipPath -Force
 
 Write-Host "Package created successfully: $zipPath" -ForegroundColor Green
+Write-Host "Thunderstore upload package: $thunderstoreZipPath"
 Write-Host "Contents:"
-[System.IO.Compression.ZipFile]::OpenRead($zipPath).Entries | ForEach-Object {
-    " - $($_.FullName) ($([math]::Round($_.Length / 1KB, 1)) KB)"
+$archive = [System.IO.Compression.ZipFile]::OpenRead($zipPath)
+try {
+    $archive.Entries | ForEach-Object {
+        " - $($_.FullName) ($([math]::Round($_.Length / 1KB, 1)) KB)"
+    }
+} finally {
+    $archive.Dispose()
 }

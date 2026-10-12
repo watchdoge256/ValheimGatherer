@@ -1,6 +1,28 @@
 # Gatherer - Valheim Resource Tracker
 
+**Version:** 1.2.0 | **Author:** Imbrus_Chrapmajster
+
 **Gatherer** is a full-featured Valheim mod inspired by the legendary World of Warcraft Gatherer addon (v3.3.5a). It automatically logs, tracks, and pins gathered and discovered resource nodes on both your minimap and world map, prevents duplicate pin spam, supports granular per-resource mapping (e.g., mark mushrooms but ignore copper), and seamlessly shares all markings with clanmates through the in-game **Cartography Table**.
+
+---
+
+## Local-import manual
+
+START HERE: Install BepInExPack_Valheim in the same r2modman profile, import the Gatherer ZIP using Settings > Import local mod, and launch with Start modded. Load a character and world, then press F8 to open Gatherer. Import the ZIP, not the DLL: the ZIP carries this manual.
+
+CHOOSE WHAT TO MARK: On a fresh configuration, every resource is OFF. In Resources & Categories, tick an individual resource such as Red Mushroom. Its category is enabled automatically, without selecting the other resources. A Category: ON switch selects every resource in that group; switching it OFF clears that group's selections. Select All and Deselect All affect all resource groups. Choices take effect immediately and are saved for this r2modman profile. Existing configurations keep their previous selections when upgrading; use Deselect All for a clean start.
+
+FIRST MARKER: Select Red Mushroom, close the window with F8, Esc, or Close, and walk near a wild mushroom. The default discovery mode scans within 15 metres every 2 seconds and also records gathering/mining interactions. Open the world map with M to see the marker. Nearby nodes of the same resource are merged to prevent clutter. Turning tracking off stops new markers; it does not delete existing map pins.
+
+DISCOVERY AND SETTINGS: General & Pin Settings contains the master Mod Enabled switch, cartography sharing, notifications, discovery mode, pin prefix, and merge distances. Interact Only records picking/mining; Interact & Proximity Radar also scans nearby nodes; Interact & Hover also records nodes you look at; All combines these triggers. Custom Filters & Radar adjusts scan radius and include/exclude lists. Exclude names block matching resources; include names explicitly opt matching resources into tracking even if their normal toggles are off. Leave both lists empty for checkbox-only tracking.
+
+SHARE WITH FRIENDS: Leave Share On Cartography Table enabled. At a Cartography Table, use Record discoveries to upload your saved map pins. Friends then use Read map at that table to receive them. Friends do not need Gatherer just to receive the shared pins. Sharing is through the table, not automatic live synchronisation.
+
+CONFIGURATION FILE: After the first modded launch, r2modman's Configuration editor lists com.watchdoge.valheim.gatherer.cfg. When editing that file, enable BOTH the relevant Track category and the individual resource entry. For red mushrooms only, set TrackMushrooms = true and RedMushroom = true; leave other resource entries false. ToggleUiKey changes the F8 shortcut. Edit files with the game closed.
+
+TROUBLESHOOTING: If F8 does nothing, confirm Start modded was used and Gatherer and BepInEx are enabled in the selected profile. If no pins appear, check Mod Enabled, select a resource, clear unwanted exclusions, and visit a matching wild node; an existing nearby pin may suppress duplicates. If the cursor is still missing, confirm the updated Gatherer DLL is installed and inspect BepInEx's LogOutput.log for patch errors. The menu blocks character input; it does not pause the world.
+
+FULL REFERENCE: The ZIP includes README.md with the complete settings and resource tables. Use r2modman's Settings > Browse profile folder, then open BepInEx\plugins and the Gatherer installation folder to find README.md. Locally imported mods do not get a rendered README page in the Installed list. This local-import package puts the guide above into the description shown when you expand Gatherer.
 
 ---
 
@@ -50,13 +72,14 @@
 4. Import Gatherer:
    - Go to **Settings** in the left menu.
    - Click **Import local mod** → **From file**.
-   - Browse to `Gatherer-1.0.0.zip` and select it.
+   - Browse to `Gatherer-1.2.0.zip` and select it. Expand Gatherer in the Installed list to read the local-import manual.
+   - Confirm the author is `Imbrus_Chrapmajster`. If replacing an older `Unknown-Gatherer` import, uninstall that entry first so two copies of the plugin are not loaded. Keep your configuration file.
 5. Launch the game using **Start modded** in the upper-left corner of r2modman.
 
 ### Manual Installation
 
 1. Install **BepInEx for Valheim** (v5.4.2200 or newer) into your game root folder.
-2. Extract `ValheimGatherer.dll` from `Gatherer-1.0.0.zip`.
+2. Extract `ValheimGatherer.dll` from `Gatherer-1.2.0.zip`.
 3. Place `ValheimGatherer.dll` in `<ValheimDirectory>\BepInEx\plugins\`.
 4. Launch Valheim via Steam.
 
@@ -133,7 +156,8 @@ Gatherer checks whether an object was cultivated or constructed by a player (`Pi
 
 ### How to Access the Config
 
-- **In-Game Interactive Menu (Built-in!):** Press **`F8`** anytime in-game to open Gatherer's custom interactive GUI. You can toggle resources, categories, radar ranges, and cartography sharing with real-time effect! (The keybind is rebindable via `ToggleUiKey`).
+- **In-Game Interactive Menu (Built-in!):** Press **`F8`** anytime in-game to open Gatherer's custom interactive GUI. The mouse cursor appears automatically and game inputs are paused so you can freely click checkboxes, sliders, and buttons. You can toggle individual resources, categories, "Select All", radar ranges, and cartography sharing with real-time effect! (The keybind is rebindable via `ToggleUiKey`).
+- **Default State (Clean Slate):** All resource tracking is **disabled by default**. You choose exactly what you want to track by opening F8 and checking what you need (e.g. check "Red Mushroom" or click "Category: ON" or "Select All").
 - **Inside r2modman:** Click **Configuration editor** in the left sidebar, find `com.watchdoge.valheim.gatherer.cfg`, and click **Edit Config**.
 - **In-Game (via BepInEx ConfigurationManager):** Press **`F1`** while in-game (if installed) to modify settings live.
 - **Manual File:** Found at `<ValheimRoot>\BepInEx\config\com.watchdoge.valheim.gatherer.cfg`.
@@ -147,12 +171,29 @@ TrackMushrooms = true
 TrackBerries = true
 TrackOresAndVeins = false
 
+[4 - Specific Resources - Mushrooms]
+RedMushroom = true
+YellowMushroom = true
+BlueMushroom = true
+Magecap = true
+JotunPuffs = true
+SmokePuff = true
+
+[5 - Specific Resources - Berries]
+Raspberry = true
+Blueberry = true
+Cloudberry = true
+
 [7 - Specific Resources - Ores]
 CopperDeposit = false
 ```
 
 #### Scenario B: Mark ONLY High-Tier Resources (Silver, Magecap, Jotun Puffs, Flametal)
 ```ini
+[3 - Categories]
+TrackMushrooms = true
+TrackOresAndVeins = true
+
 [4 - Specific Resources - Mushrooms]
 RedMushroom = false
 YellowMushroom = false
@@ -212,60 +253,60 @@ ProximityScanInterval = 1.5
 #### Section: `3 - Categories`
 | Key | Type | Default | Description |
 |---|---|---|---|
-| `TrackMushrooms` | Boolean | `true` | Master category toggle for all mushrooms. |
-| `TrackBerries` | Boolean | `true` | Master category toggle for all berry bushes. |
-| `TrackHerbsAndPlants` | Boolean | `true` | Master category toggle for wild plants and seed crops. |
-| `TrackFarmingCrops` | Boolean | `true` | Master category toggle for wild barley and flax. |
-| `TrackOresAndVeins` | Boolean | `true` | Master category toggle for all ores and deposits. |
-| `TrackBeehives` | Boolean | `true` | Master category toggle for wild beehives. |
-| `TrackSpecial` | Boolean | `true` | Master category toggle for vegvisirs, roots, spawners. |
+| `TrackMushrooms` | Boolean | `false` | Master category toggle for all mushrooms. |
+| `TrackBerries` | Boolean | `false` | Master category toggle for all berry bushes. |
+| `TrackHerbsAndPlants` | Boolean | `false` | Master category toggle for wild plants and seed crops. |
+| `TrackFarmingCrops` | Boolean | `false` | Master category toggle for wild barley and flax. |
+| `TrackOresAndVeins` | Boolean | `false` | Master category toggle for all ores and deposits. |
+| `TrackBeehives` | Boolean | `false` | Master category toggle for wild beehives. |
+| `TrackSpecial` | Boolean | `false` | Master category toggle for vegvisirs, roots, spawners. |
 
 #### Section: `4 - Specific Resources - Mushrooms`
 | Key | Type | Default | Biome / Notes |
 |---|---|---|---|
-| `RedMushroom` | Boolean | `true` | Meadows / Black Forest |
-| `YellowMushroom` | Boolean | `true` | Burial Chambers / Sunken Crypts / Caves |
-| `BlueMushroom` | Boolean | `true` | Deep forest & caves |
-| `Magecap` | Boolean | `true` | Mistlands magic food |
-| `JotunPuffs` | Boolean | `true` | Mistlands stamina food |
-| `SmokePuff` | Boolean | `true` | Ashlands food |
+| `RedMushroom` | Boolean | `false` | Meadows / Black Forest |
+| `YellowMushroom` | Boolean | `false` | Burial Chambers / Sunken Crypts / Caves |
+| `BlueMushroom` | Boolean | `false` | Deep forest & caves |
+| `Magecap` | Boolean | `false` | Mistlands magic food |
+| `JotunPuffs` | Boolean | `false` | Mistlands stamina food |
+| `SmokePuff` | Boolean | `false` | Ashlands food |
 
 #### Section: `5 - Specific Resources - Berries`
 | Key | Type | Default | Biome / Notes |
 |---|---|---|---|
-| `Raspberry` | Boolean | `true` | Meadows bushes |
-| `Blueberry` | Boolean | `true` | Black Forest bushes |
-| `Cloudberry` | Boolean | `true` | Plains plains |
+| `Raspberry` | Boolean | `false` | Meadows bushes |
+| `Blueberry` | Boolean | `false` | Black Forest bushes |
+| `Cloudberry` | Boolean | `false` | Plains plains |
 
 #### Section: `6 - Specific Resources - Herbs and Plants`
 | Key | Type | Default | Biome / Notes |
 |---|---|---|---|
-| `Thistle` | Boolean | `true` | Black Forest / Swamp |
-| `Dandelion` | Boolean | `true` | Meadows |
-| `CarrotSeeds` | Boolean | `true` | Black Forest wild flowers |
-| `TurnipSeeds` | Boolean | `true` | Swamp wild flowers |
-| `OnionSeeds` | Boolean | `true` | Mountain chests / wild |
-| `Fiddlehead` | Boolean | `true` | Ashlands ferns |
-| `Barley` | Boolean | `true` | Plains Fuling villages |
-| `Flax` | Boolean | `true` | Plains Fuling villages |
+| `Thistle` | Boolean | `false` | Black Forest / Swamp |
+| `Dandelion` | Boolean | `false` | Meadows |
+| `CarrotSeeds` | Boolean | `false` | Black Forest wild flowers |
+| `TurnipSeeds` | Boolean | `false` | Swamp wild flowers |
+| `OnionSeeds` | Boolean | `false` | Mountain chests / wild |
+| `Fiddlehead` | Boolean | `false` | Ashlands ferns |
+| `Barley` | Boolean | `false` | Plains Fuling villages |
+| `Flax` | Boolean | `false` | Plains Fuling villages |
 
 #### Section: `7 - Specific Resources - Ores`
 | Key | Type | Default | Biome / Notes |
 |---|---|---|---|
-| `CopperDeposit` | Boolean | `true` | Black Forest mounds |
-| `TinDeposit` | Boolean | `true` | Black Forest shorelines |
-| `SilverVein` | Boolean | `true` | Mountain underground veins |
-| `IronMuddyScrapPile`| Boolean | `true` | Swamp Sunken Crypts / muddy veins |
-| `Obsidian` | Boolean | `true` | Mountain surface boulders |
-| `FlametalOre` | Boolean | `true` | Ashlands meteorites |
+| `CopperDeposit` | Boolean | `false` | Black Forest mounds |
+| `TinDeposit` | Boolean | `false` | Black Forest shorelines |
+| `SilverVein` | Boolean | `false` | Mountain underground veins |
+| `IronMuddyScrapPile`| Boolean | `false` | Swamp Sunken Crypts / muddy veins |
+| `Obsidian` | Boolean | `false` | Mountain surface boulders |
+| `FlametalOre` | Boolean | `false` | Ashlands meteorites |
 
 #### Section: `8 - Specific Resources - Special`
 | Key | Type | Default | Biome / Notes |
 |---|---|---|---|
-| `Beehive` | Boolean | `true` | Abandoned Meadow / Black Forest houses |
-| `Vegvisir` | Boolean | `true` | Boss locator runestones |
-| `SurtlingSpawner` | Boolean | `true` | Swamp fire geysers & Ashlands spawners |
-| `AncientRoot` | Boolean | `true` | Mistlands sap-extractable roots |
+| `Beehive` | Boolean | `false` | Abandoned Meadow / Black Forest houses |
+| `Vegvisir` | Boolean | `false` | Boss locator runestones |
+| `SurtlingSpawner` | Boolean | `false` | Swamp fire geysers & Ashlands spawners |
+| `AncientRoot` | Boolean | `false` | Mistlands sap-extractable roots |
 
 #### Section: `9 - Advanced Filters`
 | Key | Type | Default | Description |

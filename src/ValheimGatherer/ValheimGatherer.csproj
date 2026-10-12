@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ValheimGatherer</AssemblyName>
     <RootNamespace>ValheimGatherer</RootNamespace>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -16,6 +16,10 @@
   <ItemGroup Condition="'$(ValheimManaged)' != '' and Exists('$(ValheimManaged)\assembly_valheim.dll')">
     <Reference Include="assembly_valheim">
       <HintPath>$(ValheimManaged)\assembly_valheim.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="assembly_utils">
+      <HintPath>$(ValheimManaged)\assembly_utils.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="assembly_guiutils">

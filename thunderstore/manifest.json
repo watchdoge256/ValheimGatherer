@@ -1,8 +1,8 @@
 {
   "name": "Gatherer",
-  "version_number": "1.1.0",
+  "version_number": "1.2.0",
   "website_url": "https://github.com/watchdoge256/ValheimGatherer",
-  "description": "WoW 3.3.5a style Gatherer mod for Valheim. Automatically tracks gathered & discovered resource nodes, highly configurable (e.g. mark mushrooms but not copper), and shareable via Cartography Table.",
+  "description": "Start modded, load a world, press F8 and select resources (all OFF by default). Walk near or gather selected nodes to mark them. Share via Cartography Table: Record discoveries, then friends Read map. Full manual: bundled README.md.",
   "dependencies": [
     "denikson-BepInExPack_Valheim-5.4.2351"
   ]

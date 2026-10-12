@@ -128,83 +128,83 @@ namespace ValheimGatherer.Configuration
                 "Interval in seconds between proximity scans. Higher values improve performance, lower values spot nodes faster.");
 
             // 3 - Categories
-            TrackMushrooms = config.Bind("3 - Categories", "TrackMushrooms", true,
+            TrackMushrooms = config.Bind("3 - Categories", "TrackMushrooms", false,
                 "Enable or disable tracking all mushrooms.");
-            TrackBerries = config.Bind("3 - Categories", "TrackBerries", true,
+            TrackBerries = config.Bind("3 - Categories", "TrackBerries", false,
                 "Enable or disable tracking all berries.");
-            TrackHerbsAndPlants = config.Bind("3 - Categories", "TrackHerbsAndPlants", true,
+            TrackHerbsAndPlants = config.Bind("3 - Categories", "TrackHerbsAndPlants", false,
                 "Enable or disable tracking wild plants and herbs.");
-            TrackFarmingCrops = config.Bind("3 - Categories", "TrackFarmingCrops", true,
+            TrackFarmingCrops = config.Bind("3 - Categories", "TrackFarmingCrops", false,
                 "Enable or disable tracking wild and cultivated crops (e.g. barley, flax).");
-            TrackOresAndVeins = config.Bind("3 - Categories", "TrackOresAndVeins", true,
+            TrackOresAndVeins = config.Bind("3 - Categories", "TrackOresAndVeins", false,
                 "Enable or disable tracking all ore veins and mineral deposits.");
-            TrackBeehives = config.Bind("3 - Categories", "TrackBeehives", true,
+            TrackBeehives = config.Bind("3 - Categories", "TrackBeehives", false,
                 "Enable or disable tracking wild beehives.");
-            TrackSpecial = config.Bind("3 - Categories", "TrackSpecial", true,
+            TrackSpecial = config.Bind("3 - Categories", "TrackSpecial", false,
                 "Enable or disable tracking special POIs (vegvisir, surtling spawner, ancient roots).");
 
             // 4 - Specific Resources - Mushrooms
-            MarkRedMushroom = config.Bind("4 - Specific Resources - Mushrooms", "RedMushroom", true,
+            MarkRedMushroom = config.Bind("4 - Specific Resources - Mushrooms", "RedMushroom", false,
                 "Mark standard red mushrooms.");
-            MarkYellowMushroom = config.Bind("4 - Specific Resources - Mushrooms", "YellowMushroom", true,
+            MarkYellowMushroom = config.Bind("4 - Specific Resources - Mushrooms", "YellowMushroom", false,
                 "Mark yellow mushrooms found in dungeons, caves, and crypts.");
-            MarkBlueMushroom = config.Bind("4 - Specific Resources - Mushrooms", "BlueMushroom", true,
+            MarkBlueMushroom = config.Bind("4 - Specific Resources - Mushrooms", "BlueMushroom", false,
                 "Mark blue mushrooms.");
-            MarkMagecap = config.Bind("4 - Specific Resources - Mushrooms", "Magecap", true,
+            MarkMagecap = config.Bind("4 - Specific Resources - Mushrooms", "Magecap", false,
                 "Mark Magecap mushrooms (Mistlands).");
-            MarkJotunPuffs = config.Bind("4 - Specific Resources - Mushrooms", "JotunPuffs", true,
+            MarkJotunPuffs = config.Bind("4 - Specific Resources - Mushrooms", "JotunPuffs", false,
                 "Mark Jotun Puffs mushrooms (Mistlands).");
-            MarkSmokePuff = config.Bind("4 - Specific Resources - Mushrooms", "SmokePuff", true,
+            MarkSmokePuff = config.Bind("4 - Specific Resources - Mushrooms", "SmokePuff", false,
                 "Mark Smoke Puff mushrooms (Ashlands).");
 
             // 5 - Specific Resources - Berries
-            MarkRaspberry = config.Bind("5 - Specific Resources - Berries", "Raspberry", true,
+            MarkRaspberry = config.Bind("5 - Specific Resources - Berries", "Raspberry", false,
                 "Mark raspberry bushes (Meadows).");
-            MarkBlueberry = config.Bind("5 - Specific Resources - Berries", "Blueberry", true,
+            MarkBlueberry = config.Bind("5 - Specific Resources - Berries", "Blueberry", false,
                 "Mark blueberry bushes (Black Forest).");
-            MarkCloudberry = config.Bind("5 - Specific Resources - Berries", "Cloudberry", true,
+            MarkCloudberry = config.Bind("5 - Specific Resources - Berries", "Cloudberry", false,
                 "Mark cloudberry bushes (Plains).");
 
             // 6 - Specific Resources - Herbs & Plants
-            MarkThistle = config.Bind("6 - Specific Resources - Herbs and Plants", "Thistle", true,
+            MarkThistle = config.Bind("6 - Specific Resources - Herbs and Plants", "Thistle", false,
                 "Mark glowing thistle (Black Forest / Swamp).");
-            MarkDandelion = config.Bind("6 - Specific Resources - Herbs and Plants", "Dandelion", true,
+            MarkDandelion = config.Bind("6 - Specific Resources - Herbs and Plants", "Dandelion", false,
                 "Mark dandelions (Meadows).");
-            MarkCarrotSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "CarrotSeeds", true,
+            MarkCarrotSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "CarrotSeeds", false,
                 "Mark wild seed carrots (Black Forest).");
-            MarkTurnipSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "TurnipSeeds", true,
+            MarkTurnipSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "TurnipSeeds", false,
                 "Mark wild seed turnips (Swamp).");
-            MarkOnionSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "OnionSeeds", true,
+            MarkOnionSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "OnionSeeds", false,
                 "Mark wild seed onions (Mountain chests/wild).");
-            MarkFiddlehead = config.Bind("6 - Specific Resources - Herbs and Plants", "Fiddlehead", true,
+            MarkFiddlehead = config.Bind("6 - Specific Resources - Herbs and Plants", "Fiddlehead", false,
                 "Mark fiddleheads (Ashlands).");
-            MarkBarley = config.Bind("6 - Specific Resources - Herbs and Plants", "Barley", true,
+            MarkBarley = config.Bind("6 - Specific Resources - Herbs and Plants", "Barley", false,
                 "Mark barley (Plains).");
-            MarkFlax = config.Bind("6 - Specific Resources - Herbs and Plants", "Flax", true,
+            MarkFlax = config.Bind("6 - Specific Resources - Herbs and Plants", "Flax", false,
                 "Mark flax (Plains).");
 
             // 7 - Specific Resources - Ores
-            MarkCopper = config.Bind("7 - Specific Resources - Ores", "CopperDeposit", true,
-                "Mark copper deposits (Black Forest). Set to false if you want mushrooms but not copper!");
-            MarkTin = config.Bind("7 - Specific Resources - Ores", "TinDeposit", true,
+            MarkCopper = config.Bind("7 - Specific Resources - Ores", "CopperDeposit", false,
+                "Mark copper deposits (Black Forest). Set to true if you want to track copper!");
+            MarkTin = config.Bind("7 - Specific Resources - Ores", "TinDeposit", false,
                 "Mark tin deposits (Black Forest shorelines).");
-            MarkSilver = config.Bind("7 - Specific Resources - Ores", "SilverVein", true,
+            MarkSilver = config.Bind("7 - Specific Resources - Ores", "SilverVein", false,
                 "Mark silver veins (Mountains).");
-            MarkIronMudpile = config.Bind("7 - Specific Resources - Ores", "IronMuddyScrapPile", true,
+            MarkIronMudpile = config.Bind("7 - Specific Resources - Ores", "IronMuddyScrapPile", false,
                 "Mark muddy scrap piles (Swamp Sunken Crypts / Swamp ground).");
-            MarkObsidian = config.Bind("7 - Specific Resources - Ores", "Obsidian", true,
+            MarkObsidian = config.Bind("7 - Specific Resources - Ores", "Obsidian", false,
                 "Mark obsidian deposits (Mountains).");
-            MarkFlametal = config.Bind("7 - Specific Resources - Ores", "FlametalOre", true,
+            MarkFlametal = config.Bind("7 - Specific Resources - Ores", "FlametalOre", false,
                 "Mark flametal / meteorite ore deposits (Ashlands).");
 
             // 8 - Specific Resources - Special
-            MarkBeehive = config.Bind("8 - Specific Resources - Special", "Beehive", true,
+            MarkBeehive = config.Bind("8 - Specific Resources - Special", "Beehive", false,
                 "Mark wild beehives found in abandoned buildings.");
-            MarkVegvisir = config.Bind("8 - Specific Resources - Special", "Vegvisir", true,
+            MarkVegvisir = config.Bind("8 - Specific Resources - Special", "Vegvisir", false,
                 "Mark Vegvisir runestones.");
-            MarkSurtlingSpawner = config.Bind("8 - Specific Resources - Special", "SurtlingSpawner", true,
+            MarkSurtlingSpawner = config.Bind("8 - Specific Resources - Special", "SurtlingSpawner", false,
                 "Mark fire geysers / surtling spawners (Swamp / Ashlands).");
-            MarkAncientRoot = config.Bind("8 - Specific Resources - Special", "AncientRoot", true,
+            MarkAncientRoot = config.Bind("8 - Specific Resources - Special", "AncientRoot", false,
                 "Mark ancient roots / sap roots (Mistlands).");
 
             // 9 - Advanced Filters
