@@ -1,6 +1,6 @@
 {
   "name": "Gatherer",
-  "version_number": "1.2.0",
+  "version_number": "1.3.0",
   "website_url": "https://github.com/watchdoge256/ValheimGatherer",
   "description": "Start modded, load a world, press F8 and select resources (all OFF by default). Walk near or gather selected nodes to mark them. Share via Cartography Table: Record discoveries, then friends Read map. Full manual: bundled README.md.",
   "dependencies": [

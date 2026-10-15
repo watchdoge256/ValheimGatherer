@@ -78,6 +78,9 @@ namespace ValheimGatherer.Configuration
         // 9 - Advanced Filters
         public ConfigEntry<string> CustomIncludeFilter { get; private set; }
         public ConfigEntry<string> CustomExcludeFilter { get; private set; }
+        public ConfigEntry<bool> UseResourceIcons { get; private set; }
+        public IReadOnlyDictionary<string, ConfigEntry<bool>> ResourceVisibility => _resourceVisibility;
+        private readonly Dictionary<string, ConfigEntry<bool>> _resourceVisibility = new Dictionary<string, ConfigEntry<bool>>();
 
         private HashSet<string> _parsedIncludes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         private HashSet<string> _parsedExcludes = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -85,6 +88,13 @@ namespace ValheimGatherer.Configuration
         public GathererConfig(ConfigFile config)
         {
             InitConfig(config);
+            UseResourceIcons = config.Bind("10 - Map Display", "UseResourceIcons", true,
+                "Display item images on resource pins recognized by name. Saved/shared pins retain their standard icons.");
+            foreach (var resource in Core.ResourceRegistry.AllDefinitions)
+            {
+                _resourceVisibility[resource.Id] = config.Bind("11 - Resource Visibility", resource.Id, true,
+                    "Show " + resource.DisplayName + " pins on the world map and minimap. Does not change tracking, saving or sharing.");
+            }
             UpdateParsedFilters();
             config.ConfigReloaded += (s, e) => UpdateParsedFilters();
         }

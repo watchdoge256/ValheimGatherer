@@ -203,6 +203,10 @@ namespace ValheimGatherer.UI
             }
             GUILayout.EndHorizontal();
 
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Map Icons & Visibility", _activeTab == 3 ? _tabActiveStyle : _tabStyle)) _activeTab = 3;
+            GUILayout.EndHorizontal();
+
             GUILayout.Space(8);
 
             _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.ExpandHeight(true));
@@ -215,9 +219,13 @@ namespace ValheimGatherer.UI
             {
                 DrawGeneralSettingsTab(config);
             }
-            else
+            else if (_activeTab == 2)
             {
                 DrawFiltersTab(config);
+            }
+            else
+            {
+                DrawMapDisplayTab(config);
             }
 
             GUILayout.EndScrollView();
@@ -226,8 +234,11 @@ namespace ValheimGatherer.UI
             GUILayout.BeginHorizontal();
             GUILayout.Label("Press " + config.ToggleUiKey.Value + " or Esc to toggle this menu anytime in-game.", _labelStyle);
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Select All", GUILayout.Width(90))) SetAllResources(config, true);
-            if (GUILayout.Button("Deselect All", GUILayout.Width(90))) SetAllResources(config, false);
+            if (_activeTab != 3)
+            {
+                if (GUILayout.Button("Select All", GUILayout.Width(90))) SetAllResources(config, true);
+                if (GUILayout.Button("Deselect All", GUILayout.Width(90))) SetAllResources(config, false);
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.EndVertical();
@@ -359,6 +370,22 @@ namespace ValheimGatherer.UI
             DrawToggle(config.MarkSurtlingSpawner, "Surtling Spawners", config.TrackSpecial);
             DrawToggle(config.MarkAncientRoot, "Ancient Roots (Sap)", config.TrackSpecial);
             GUILayout.EndHorizontal();
+        }
+
+        private void DrawMapDisplayTab(GathererConfig config)
+        {
+            GUILayout.Label("Map Icons & Visibility", _headerStyle);
+            GUILayout.Label("Hide/show existing resource pins without changing tracking or sharing.", _labelStyle);
+            DrawToggle(config.UseResourceIcons, "Use item icons");
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button("Show All"))
+                foreach (var entry in config.ResourceVisibility.Values) entry.Value = true;
+            if (GUILayout.Button("Hide All"))
+                foreach (var entry in config.ResourceVisibility.Values) entry.Value = false;
+            GUILayout.EndHorizontal();
+            foreach (var resource in ResourceRegistry.AllDefinitions)
+                DrawToggle(config.ResourceVisibility[resource.Id], resource.DisplayName);
+            GUILayout.Label("Filters apply to world map and minimap. Other players keep their own visibility choices.", _labelStyle);
         }
 
         private void DrawGeneralSettingsTab(GathererConfig config)

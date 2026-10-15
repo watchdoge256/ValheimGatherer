@@ -1,6 +1,6 @@
 # Gatherer - Valheim Resource Tracker
 
-**Version:** 1.2.0 | **Author:** Imbrus_Chrapmajster
+**Version:** 1.3.0 | **Author:** Imbrus_Chrapmajster
 
 **Gatherer** is a full-featured Valheim mod inspired by the legendary World of Warcraft Gatherer addon (v3.3.5a). It automatically logs, tracks, and pins gathered and discovered resource nodes on both your minimap and world map, prevents duplicate pin spam, supports granular per-resource mapping (e.g., mark mushrooms but ignore copper), and seamlessly shares all markings with clanmates through the in-game **Cartography Table**.
 
@@ -11,6 +11,8 @@
 START HERE: Install BepInExPack_Valheim in the same r2modman profile, import the Gatherer ZIP using Settings > Import local mod, and launch with Start modded. Load a character and world, then press F8 to open Gatherer. Import the ZIP, not the DLL: the ZIP carries this manual.
 
 CHOOSE WHAT TO MARK: On a fresh configuration, every resource is OFF. In Resources & Categories, tick an individual resource such as Red Mushroom. Its category is enabled automatically, without selecting the other resources. A Category: ON switch selects every resource in that group; switching it OFF clears that group's selections. Select All and Deselect All affect all resource groups. Choices take effect immediately and are saved for this r2modman profile. Existing configurations keep their previous selections when upgrading; use Deselect All for a clean start.
+
+ICONS AND VISIBILITY: In F8, open Map Icons & Visibility. Use item icons replaces recognized resource markers with their in-game item images where available; nodes without an item image keep their standard pin icon. Each resource has an independent visibility checkbox, plus Show All and Hide All. These affect both the world map and minimap, not tracking, saving, or Cartography Table sharing. Hidden pins remain underneath and can be shown again at any time. Friends with Gatherer interpret shared pin names using their own icon/filter settings; friends without Gatherer see ordinary pins.
 
 FIRST MARKER: Select Red Mushroom, close the window with F8, Esc, or Close, and walk near a wild mushroom. The default discovery mode scans within 15 metres every 2 seconds and also records gathering/mining interactions. Open the world map with M to see the marker. Nearby nodes of the same resource are merged to prevent clutter. Turning tracking off stops new markers; it does not delete existing map pins.
 
@@ -48,6 +50,7 @@ FULL REFERENCE: The ZIP includes README.md with the complete settings and resour
 
 ## Core Features & Overview
 
+- **Resource Item Icons & Display Filters:** F8 > Map Icons & Visibility offers item images and independent per-resource Show/Hide controls. Existing and shared pins are recognized by name; no custom pin types or asset downloads are required.
 - **WoW 3.3.5a Style Discovery:** Automatically spots and maps resource spawns upon gathering, mining, walking near them (radar scan), or hovering over them.
 - **Native Cartography Table Integration:** Markings are created using Valheim's persistent map pin system (`m_save = true`), meaning **Record discoveries** uploads your pins to the Cartography Table and **Read map** distributes them to everyone else on the server.
 - **Zero Client Lock-In (Vanilla Friendly):** Other players on your server **do not need the mod installed** to view or download your pins from the Cartography Table!
@@ -72,14 +75,14 @@ FULL REFERENCE: The ZIP includes README.md with the complete settings and resour
 4. Import Gatherer:
    - Go to **Settings** in the left menu.
    - Click **Import local mod** → **From file**.
-   - Browse to `Gatherer-1.2.0.zip` and select it. Expand Gatherer in the Installed list to read the local-import manual.
+   - Browse to `Gatherer-1.3.0.zip` and select it. Expand Gatherer in the Installed list to read the local-import manual.
    - Confirm the author is `Imbrus_Chrapmajster`. If replacing an older `Unknown-Gatherer` import, uninstall that entry first so two copies of the plugin are not loaded. Keep your configuration file.
 5. Launch the game using **Start modded** in the upper-left corner of r2modman.
 
 ### Manual Installation
 
 1. Install **BepInEx for Valheim** (v5.4.2200 or newer) into your game root folder.
-2. Extract `ValheimGatherer.dll` from `Gatherer-1.2.0.zip`.
+2. Extract `ValheimGatherer.dll` from `Gatherer-1.3.0.zip`.
 3. Place `ValheimGatherer.dll` in `<ValheimDirectory>\BepInEx\plugins\`.
 4. Launch Valheim via Steam.
 
@@ -153,6 +156,16 @@ Gatherer checks whether an object was cultivated or constructed by a player (`Pi
 ---
 
 ## Configuration Guide
+
+### Resource Icons and Map Visibility (v1.3.0)
+
+Press **F8 > Map Icons & Visibility**. All resources are **visible** by default, while new-resource **tracking** remains off until selected. These are separate settings: hiding Copper does not stop discovering copper pins, and disabling copper tracking does not hide existing pins.
+
+- **Use item icons:** on by default. Mushrooms, berries, plants and ores use their existing in-game item sprites; wild beehives use the queen bee image. POIs without an item image and unavailable item prefabs retain the original pin icon.
+- **Resource checkboxes / Show All / Hide All:** change local visibility on both maps, including labels. Hidden pins are not deleted and remain available for saving, deduplication and sharing. Valheim's own map icon-type filters still apply.
+- **Vanilla-compatible sharing:** the saved pin type, name, owner and save flag are unchanged. Gatherer decorates the visible image only. Friends without Gatherer see the ordinary icon; friends with Gatherer use their own visibility preferences.
+- **Name recognition:** exact resource IDs, English display/short names and names in your currently selected game language are recognized. Prefixes separated by whitespace or a closing bracket (for example `[G] Copper`) work for shared pins. Your configured `PinNamePrefix` also works without a separator. For other custom prefixes, use the same prefix setting on receiving clients. Renamed pins that no longer match a resource keep their normal appearance. Manual pins with matching resource names are also interpreted as resource pins; arbitrary modded/custom resource names are not filtered.
+- These options are saved in `10 - Map Display` (`UseResourceIcons`) and `11 - Resource Visibility` (one Boolean per resource ID). They do not modify Cartography Table data.
 
 ### How to Access the Config
 
@@ -313,6 +326,12 @@ ProximityScanInterval = 1.5
 |---|---|---|---|
 | `CustomIncludeFilter` | String | `""` | Comma-separated prefab or display names to forcibly pin. |
 | `CustomExcludeFilter` | String | `""` | Comma-separated prefab or display names to forcibly blacklist. |
+
+#### Sections: `10 - Map Display` and `11 - Resource Visibility`
+| Key | Type | Default | Description |
+|---|---|---|---|
+| `UseResourceIcons` | Boolean | `true` | Show in-game item images on recognized resource pins; otherwise keep the original image. |
+| Resource ID (e.g. `Copper`, `Mushroom`) | Boolean | `true` | Show this resource's pins locally on both maps, independently of discovery and sharing. |
 
 ---
 
