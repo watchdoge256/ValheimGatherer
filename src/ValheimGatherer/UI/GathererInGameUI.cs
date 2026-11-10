@@ -283,11 +283,15 @@ namespace ValheimGatherer.UI
                 config.MarkRaspberry.Value = val;
                 config.MarkBlueberry.Value = val;
                 config.MarkCloudberry.Value = val;
+                config.MarkLingonberry.Value = val;
             });
             GUILayout.BeginHorizontal();
             DrawToggle(config.MarkRaspberry, "Raspberries", config.TrackBerries);
             DrawToggle(config.MarkBlueberry, "Blueberries", config.TrackBerries);
             DrawToggle(config.MarkCloudberry, "Cloudberries", config.TrackBerries);
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkLingonberry, "Lingonberries (Deep North)", config.TrackBerries);
             GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
@@ -317,14 +321,22 @@ namespace ValheimGatherer.UI
             GUILayout.Space(6);
 
             // Farming Crops Section
-            DrawCategoryHeader("Farming Crops (Wild)", config.TrackFarmingCrops, val =>
+            DrawCategoryHeader("Crops & Tree Seeds", config.TrackFarmingCrops, val =>
             {
                 config.MarkBarley.Value = val;
                 config.MarkFlax.Value = val;
+                config.MarkKaleSeeds.Value = val;
+                config.MarkOatSeeds.Value = val;
+                config.MarkTimberwoodCone.Value = val;
             });
             GUILayout.BeginHorizontal();
             DrawToggle(config.MarkBarley, "Barley", config.TrackFarmingCrops);
             DrawToggle(config.MarkFlax, "Flax", config.TrackFarmingCrops);
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            DrawToggle(config.MarkKaleSeeds, "Kale Seeds (Deep North)", config.TrackFarmingCrops);
+            DrawToggle(config.MarkOatSeeds, "Oat Seeds (Deep North)", config.TrackFarmingCrops);
+            DrawToggle(config.MarkTimberwoodCone, "Timberwood Cone (Deep North)", config.TrackFarmingCrops);
             GUILayout.EndHorizontal();
 
             GUILayout.Space(6);
@@ -506,6 +518,7 @@ namespace ValheimGatherer.UI
             config.MarkRaspberry.Value = val;
             config.MarkBlueberry.Value = val;
             config.MarkCloudberry.Value = val;
+            config.MarkLingonberry.Value = val;
 
             config.MarkThistle.Value = val;
             config.MarkDandelion.Value = val;
@@ -516,6 +529,9 @@ namespace ValheimGatherer.UI
 
             config.MarkBarley.Value = val;
             config.MarkFlax.Value = val;
+            config.MarkKaleSeeds.Value = val;
+            config.MarkOatSeeds.Value = val;
+            config.MarkTimberwoodCone.Value = val;
 
             config.MarkCopper.Value = val;
             config.MarkTin.Value = val;

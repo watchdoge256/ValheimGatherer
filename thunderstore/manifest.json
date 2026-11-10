@@ -1,9 +1,9 @@
 {
   "name": "Gatherer",
-  "version_number": "1.3.0",
+  "version_number": "1.3.2",
   "website_url": "https://github.com/watchdoge256/ValheimGatherer",
-  "description": "Start modded, load a world, press F8 and select resources (all OFF by default). Walk near or gather selected nodes to mark them. Share via Cartography Table: Record discoveries, then friends Read map. Full manual: bundled README.md.",
+  "description": "Track selected Valheim resources, including Deep North lingonberries, Kale Seeds, Oat Seeds, and Timberwood Cones. Press F8 to configure tracking, map icons, and visibility; share pins via the Cartography Table. Full manual in README.md.",
   "dependencies": [
-    "denikson-BepInExPack_Valheim-5.4.2351"
+    "denikson-BepInExPack_Valheim-5.4.2360"
   ]
 }

@@ -70,6 +70,11 @@ namespace ValheimGatherer.Tests
                 Assert.False(config.MarkRaspberry.Value);
                 Assert.False(config.MarkBlueberry.Value);
                 Assert.False(config.MarkCloudberry.Value);
+                Assert.False(config.MarkLingonberry.Value);
+                Assert.False(config.MarkKaleSeeds.Value);
+                Assert.False(config.MarkOatSeeds.Value);
+                Assert.False(config.MarkTimberwoodCone.Value);
+                Assert.True(config.ResourceVisibility["Lingonberry"].Value);
                 Assert.False(config.MarkThistle.Value);
                 Assert.False(config.MarkCopper.Value);
                 Assert.False(config.MarkTin.Value);

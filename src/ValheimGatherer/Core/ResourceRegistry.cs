@@ -89,6 +89,14 @@ namespace ValheimGatherer.Core
                 10.0f,
                 cfg => cfg.TrackBerries.Value && cfg.MarkCloudberry.Value));
 
+            Register(new ResourceDefinition(
+                "Lingonberry", "Lingonberries", "Lingonberries",
+                ResourceCategory.Berries, PinIconType.Dot,
+                new[] { "Pickable_Lingonberry", "Lingonberry", "Lingonberries" },
+                new[] { "$item_lingonberries", "$item_lingonberry" },
+                10.0f,
+                cfg => cfg.TrackBerries.Value && cfg.MarkLingonberry.Value));
+
             // --- Herbs & Plants ---
             Register(new ResourceDefinition(
                 "Thistle", "Thistle", "Thistle",
@@ -154,6 +162,30 @@ namespace ValheimGatherer.Core
                 new[] { "$item_flax" },
                 10.0f,
                 cfg => cfg.TrackFarmingCrops.Value && cfg.MarkFlax.Value));
+
+            Register(new ResourceDefinition(
+                "KaleSeeds", "Kale Seeds", "Kale Seeds",
+                ResourceCategory.FarmingCrops, PinIconType.Dot,
+                new[] { "Pickable_KaleSeeds", "Pickable_SeedKale", "KaleSeeds" },
+                new[] { "$item_kaleseeds", "$item_kale_seeds" },
+                10.0f,
+                cfg => cfg.TrackFarmingCrops.Value && cfg.MarkKaleSeeds.Value));
+
+            Register(new ResourceDefinition(
+                "OatSeeds", "Oat Seeds", "Oat Seeds",
+                ResourceCategory.FarmingCrops, PinIconType.Dot,
+                new[] { "Pickable_OatSeeds", "Pickable_Oats", "OatSeeds" },
+                new[] { "$item_oatseeds", "$item_oat_seeds" },
+                10.0f,
+                cfg => cfg.TrackFarmingCrops.Value && cfg.MarkOatSeeds.Value));
+
+            Register(new ResourceDefinition(
+                "TimberwoodCone", "Timberwood Cone", "Timberwood Cone",
+                ResourceCategory.FarmingCrops, PinIconType.Dot,
+                new[] { "FirConeFrost", "TimberwoodCone" },
+                new[] { "$item_firconefrost", "$item_timberwoodcone", "$item_timberwood_cone" },
+                15.0f,
+                cfg => cfg.TrackFarmingCrops.Value && cfg.MarkTimberwoodCone.Value));
 
             // --- Ores & Veins ---
             Register(new ResourceDefinition(

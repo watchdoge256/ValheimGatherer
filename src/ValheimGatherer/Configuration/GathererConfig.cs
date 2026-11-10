@@ -50,6 +50,7 @@ namespace ValheimGatherer.Configuration
         public ConfigEntry<bool> MarkRaspberry { get; private set; }
         public ConfigEntry<bool> MarkBlueberry { get; private set; }
         public ConfigEntry<bool> MarkCloudberry { get; private set; }
+        public ConfigEntry<bool> MarkLingonberry { get; private set; }
 
         // 6 - Specific Resources - Herbs & Plants
         public ConfigEntry<bool> MarkThistle { get; private set; }
@@ -60,6 +61,9 @@ namespace ValheimGatherer.Configuration
         public ConfigEntry<bool> MarkFiddlehead { get; private set; }
         public ConfigEntry<bool> MarkBarley { get; private set; }
         public ConfigEntry<bool> MarkFlax { get; private set; }
+        public ConfigEntry<bool> MarkKaleSeeds { get; private set; }
+        public ConfigEntry<bool> MarkOatSeeds { get; private set; }
+        public ConfigEntry<bool> MarkTimberwoodCone { get; private set; }
 
         // 7 - Specific Resources - Ores
         public ConfigEntry<bool> MarkCopper { get; private set; }
@@ -145,7 +149,7 @@ namespace ValheimGatherer.Configuration
             TrackHerbsAndPlants = config.Bind("3 - Categories", "TrackHerbsAndPlants", false,
                 "Enable or disable tracking wild plants and herbs.");
             TrackFarmingCrops = config.Bind("3 - Categories", "TrackFarmingCrops", false,
-                "Enable or disable tracking wild and cultivated crops (e.g. barley, flax).");
+                "Enable or disable tracking crops and planting resources (e.g. barley, flax, seeds, and cones).");
             TrackOresAndVeins = config.Bind("3 - Categories", "TrackOresAndVeins", false,
                 "Enable or disable tracking all ore veins and mineral deposits.");
             TrackBeehives = config.Bind("3 - Categories", "TrackBeehives", false,
@@ -174,6 +178,8 @@ namespace ValheimGatherer.Configuration
                 "Mark blueberry bushes (Black Forest).");
             MarkCloudberry = config.Bind("5 - Specific Resources - Berries", "Cloudberry", false,
                 "Mark cloudberry bushes (Plains).");
+            MarkLingonberry = config.Bind("5 - Specific Resources - Berries", "Lingonberry", false,
+                "Mark lingonberries (Deep North).");
 
             // 6 - Specific Resources - Herbs & Plants
             MarkThistle = config.Bind("6 - Specific Resources - Herbs and Plants", "Thistle", false,
@@ -192,6 +198,12 @@ namespace ValheimGatherer.Configuration
                 "Mark barley (Plains).");
             MarkFlax = config.Bind("6 - Specific Resources - Herbs and Plants", "Flax", false,
                 "Mark flax (Plains).");
+            MarkKaleSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "KaleSeeds", false,
+                "Mark wild Kale Seeds (Deep North).");
+            MarkOatSeeds = config.Bind("6 - Specific Resources - Herbs and Plants", "OatSeeds", false,
+                "Mark wild Oat Seeds (Deep North).");
+            MarkTimberwoodCone = config.Bind("6 - Specific Resources - Herbs and Plants", "TimberwoodCone", false,
+                "Mark Timberwood Cones dropped by Deep North trees.");
 
             // 7 - Specific Resources - Ores
             MarkCopper = config.Bind("7 - Specific Resources - Ores", "CopperDeposit", false,

@@ -140,5 +140,69 @@ namespace ValheimGatherer.Tests
                     File.Delete(tempConfigPath);
             }
         }
+
+        [Fact]
+        public void Config_LingonberryRequiresCategoryAndResourceSelection()
+        {
+            string tempConfigPath = Path.Combine(Path.GetTempPath(), $"Gatherer_Test_{Path.GetRandomFileName()}.cfg");
+            try
+            {
+                var config = new GathererConfig(new ConfigFile(tempConfigPath, true));
+                var lingonberry = ResourceRegistry.Match("Pickable_Lingonberry", "$item_lingonberries", "Lingonberries");
+
+                Assert.NotNull(lingonberry);
+                Assert.False(config.TrackBerries.Value);
+                Assert.False(config.MarkLingonberry.Value);
+                Assert.False(ResourceRegistry.IsEnabled(lingonberry, config));
+
+                config.MarkLingonberry.Value = true;
+                Assert.False(ResourceRegistry.IsEnabled(lingonberry, config));
+
+                config.TrackBerries.Value = true;
+                Assert.True(ResourceRegistry.IsEnabled(lingonberry, config));
+
+                config.ResourceVisibility["Lingonberry"].Value = false;
+                Assert.True(ResourceRegistry.IsEnabled(lingonberry, config));
+            }
+            finally
+            {
+                if (File.Exists(tempConfigPath))
+                    File.Delete(tempConfigPath);
+            }
+        }
+
+        [Fact]
+        public void Config_DeepNorthPlantingResourcesRequireCropCategory()
+        {
+            string tempConfigPath = Path.Combine(Path.GetTempPath(), $"Gatherer_Test_{Path.GetRandomFileName()}.cfg");
+            try
+            {
+                var config = new GathererConfig(new ConfigFile(tempConfigPath, true));
+                var kaleSeeds = ResourceRegistry.Match("Pickable_KaleSeeds", "$item_kaleseeds", "Kale Seeds");
+                var oatSeeds = ResourceRegistry.Match("OatSeeds", "$item_oatseeds", "Oat Seeds");
+                var timberwoodCone = ResourceRegistry.Match("FirConeFrost", "$item_firconefrost", "Timberwood Cone");
+
+                Assert.NotNull(kaleSeeds);
+                Assert.NotNull(oatSeeds);
+                Assert.NotNull(timberwoodCone);
+                Assert.False(ResourceRegistry.IsEnabled(kaleSeeds, config));
+                Assert.False(ResourceRegistry.IsEnabled(oatSeeds, config));
+                Assert.False(ResourceRegistry.IsEnabled(timberwoodCone, config));
+
+                config.TrackFarmingCrops.Value = true;
+                config.MarkKaleSeeds.Value = true;
+                config.MarkOatSeeds.Value = true;
+                config.MarkTimberwoodCone.Value = true;
+
+                Assert.True(ResourceRegistry.IsEnabled(kaleSeeds, config));
+                Assert.True(ResourceRegistry.IsEnabled(oatSeeds, config));
+                Assert.True(ResourceRegistry.IsEnabled(timberwoodCone, config));
+            }
+            finally
+            {
+                if (File.Exists(tempConfigPath))
+                    File.Delete(tempConfigPath);
+            }
+        }
     }
 }

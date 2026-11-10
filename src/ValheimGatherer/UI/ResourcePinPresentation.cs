@@ -14,9 +14,11 @@ namespace ValheimGatherer.UI
             ["MushroomBlue"] = "MushroomBlue", ["Magecap"] = "MushroomMagecap",
             ["JotunPuffs"] = "MushroomJotunPuffs", ["SmokePuff"] = "MushroomSmokePuff",
             ["Raspberry"] = "Raspberry", ["Blueberry"] = "Blueberries", ["Cloudberry"] = "Cloudberry",
+            ["Lingonberry"] = "Lingonberry",
             ["Thistle"] = "Thistle", ["Dandelion"] = "Dandelion",
             ["CarrotSeeds"] = "CarrotSeeds", ["TurnipSeeds"] = "TurnipSeeds", ["OnionSeeds"] = "OnionSeeds",
             ["Fiddlehead"] = "Fiddleheadfern", ["Barley"] = "Barley", ["Flax"] = "Flax",
+            ["KaleSeeds"] = "KaleSeeds", ["OatSeeds"] = "OatSeeds", ["TimberwoodCone"] = "FirConeFrost",
             ["Copper"] = "CopperOre", ["Tin"] = "TinOre", ["Silver"] = "SilverOre",
             ["IronMudpile"] = "IronScrap", ["Obsidian"] = "Obsidian", ["Flametal"] = "FlametalOreNew",
             ["Beehive"] = "QueenBee"

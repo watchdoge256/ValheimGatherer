@@ -1,6 +1,21 @@
 # Gatherer - Valheim Resource Tracker
 
-**Version:** 1.3.0 | **Author:** Imbrus_Chrapmajster
+**Version:** 1.3.2 | **Author:** Imbrus_Chrapmajster
+
+## v1.3.2 - Deep North resources
+
+- Added Lingonberries to the berry registry, resource tracking settings, F8 resource selection, and map visibility filters.
+- Added wild Kale Seeds, Oat Seeds, and Timberwood Cones to crop/planting-resource tracking and map visibility filters. Dropped cones are recognized when picked up.
+- Added item icons for the new resources where available.
+- Lingonberry tracking is off by default; enable **Berries** and **Lingonberries (Deep North)** to track it.
+- New resource tracking is off by default; existing pins and shared map data remain compatible.
+
+## v1.3.1 - Valheim 1.0.21 dependency maintenance
+
+- Updated the required `denikson-BepInExPack_Valheim` package to **5.4.2360** (BepInEx 5.4.23.6). The pack includes Doorstop 4.6.0 and loader/platform fixes; update it in the same r2modman profile as Gatherer.
+- Checked against the installed Valheim **1.0.21** assemblies (Steam build **26249040**). Gathering, mining, hover, cursor, map rendering and Cartography Table hook signatures remain compatible; no gameplay changes are needed.
+- Build and automated tests are checked against the new game assemblies and loader. This is not a full in-game verification of this combination; the previous game log predates the update.
+- Existing configuration, tracking selections, visibility filters and saved pins are unchanged. Updating BepInEx alone may be sufficient for v1.3.0 users; v1.3.1 declares the updated dependency for new installs and mod-manager updates.
 
 **Gatherer** is a full-featured Valheim mod inspired by the legendary World of Warcraft Gatherer addon (v3.3.5a). It automatically logs, tracks, and pins gathered and discovered resource nodes on both your minimap and world map, prevents duplicate pin spam, supports granular per-resource mapping (e.g., mark mushrooms but ignore copper), and seamlessly shares all markings with clanmates through the in-game **Cartography Table**.
 
@@ -8,7 +23,7 @@
 
 ## Local-import manual
 
-START HERE: Install BepInExPack_Valheim in the same r2modman profile, import the Gatherer ZIP using Settings > Import local mod, and launch with Start modded. Load a character and world, then press F8 to open Gatherer. Import the ZIP, not the DLL: the ZIP carries this manual.
+START HERE: Install or update BepInExPack_Valheim to 5.4.2360 or newer in the same r2modman profile, import the Gatherer ZIP using Settings > Import local mod, and launch with Start modded. Load a character and world, then press F8 to open Gatherer. Import the ZIP, not the DLL: the ZIP carries this manual.
 
 CHOOSE WHAT TO MARK: On a fresh configuration, every resource is OFF. In Resources & Categories, tick an individual resource such as Red Mushroom. Its category is enabled automatically, without selecting the other resources. A Category: ON switch selects every resource in that group; switching it OFF clears that group's selections. Select All and Deselect All affect all resource groups. Choices take effect immediately and are saved for this r2modman profile. Existing configurations keep their previous selections when upgrading; use Deselect All for a clean start.
 
@@ -21,6 +36,8 @@ DISCOVERY AND SETTINGS: General & Pin Settings contains the master Mod Enabled s
 SHARE WITH FRIENDS: Leave Share On Cartography Table enabled. At a Cartography Table, use Record discoveries to upload your saved map pins. Friends then use Read map at that table to receive them. Friends do not need Gatherer just to receive the shared pins. Sharing is through the table, not automatic live synchronisation.
 
 CONFIGURATION FILE: After the first modded launch, r2modman's Configuration editor lists com.watchdoge.valheim.gatherer.cfg. When editing that file, enable BOTH the relevant Track category and the individual resource entry. For red mushrooms only, set TrackMushrooms = true and RedMushroom = true; leave other resource entries false. ToggleUiKey changes the F8 shortcut. Edit files with the game closed.
+
+DEEP NORTH RESOURCES: In F8 > Resources & Categories, turn on **Berries** and **Lingonberries (Deep North)** to map Lingonberries. To map **Kale Seeds**, **Oat Seeds**, or **Timberwood Cone**, enable the **Crops & Tree Seeds** category and select the individual resource. These are off by default. Gatherer marks the cone pickup when you collect it; with proximity discovery, nearby dropped cones are detected as well.
 
 TROUBLESHOOTING: If F8 does nothing, confirm Start modded was used and Gatherer and BepInEx are enabled in the selected profile. If no pins appear, check Mod Enabled, select a resource, clear unwanted exclusions, and visit a matching wild node; an existing nearby pin may suppress duplicates. If the cursor is still missing, confirm the updated Gatherer DLL is installed and inspect BepInEx's LogOutput.log for patch errors. The menu blocks character input; it does not pause the world.
 
@@ -75,14 +92,14 @@ FULL REFERENCE: The ZIP includes README.md with the complete settings and resour
 4. Import Gatherer:
    - Go to **Settings** in the left menu.
    - Click **Import local mod** → **From file**.
-   - Browse to `Gatherer-1.3.0.zip` and select it. Expand Gatherer in the Installed list to read the local-import manual.
+   - Browse to `Gatherer-1.3.2.zip` and select it. Expand Gatherer in the Installed list to read the local-import manual.
    - Confirm the author is `Imbrus_Chrapmajster`. If replacing an older `Unknown-Gatherer` import, uninstall that entry first so two copies of the plugin are not loaded. Keep your configuration file.
 5. Launch the game using **Start modded** in the upper-left corner of r2modman.
 
 ### Manual Installation
 
-1. Install **BepInEx for Valheim** (v5.4.2200 or newer) into your game root folder.
-2. Extract `ValheimGatherer.dll` from `Gatherer-1.3.0.zip`.
+1. Install **denikson-BepInExPack_Valheim 5.4.2360 or newer** into your game root folder, following the pack's installation instructions.
+2. Extract `ValheimGatherer.dll` from `Gatherer-1.3.2.zip`.
 3. Place `ValheimGatherer.dll` in `<ValheimDirectory>\BepInEx\plugins\`.
 4. Launch Valheim via Steam.
 
@@ -196,6 +213,7 @@ SmokePuff = true
 Raspberry = true
 Blueberry = true
 Cloudberry = true
+Lingonberry = true
 
 [7 - Specific Resources - Ores]
 CopperDeposit = false
@@ -269,7 +287,7 @@ ProximityScanInterval = 1.5
 | `TrackMushrooms` | Boolean | `false` | Master category toggle for all mushrooms. |
 | `TrackBerries` | Boolean | `false` | Master category toggle for all berry bushes. |
 | `TrackHerbsAndPlants` | Boolean | `false` | Master category toggle for wild plants and seed crops. |
-| `TrackFarmingCrops` | Boolean | `false` | Master category toggle for wild barley and flax. |
+| `TrackFarmingCrops` | Boolean | `false` | Master category toggle for crops and planting resources, including Deep North seeds and cones. |
 | `TrackOresAndVeins` | Boolean | `false` | Master category toggle for all ores and deposits. |
 | `TrackBeehives` | Boolean | `false` | Master category toggle for wild beehives. |
 | `TrackSpecial` | Boolean | `false` | Master category toggle for vegvisirs, roots, spawners. |
@@ -289,7 +307,8 @@ ProximityScanInterval = 1.5
 |---|---|---|---|
 | `Raspberry` | Boolean | `false` | Meadows bushes |
 | `Blueberry` | Boolean | `false` | Black Forest bushes |
-| `Cloudberry` | Boolean | `false` | Plains plains |
+| `Cloudberry` | Boolean | `false` | Plains bushes |
+| `Lingonberry` | Boolean | `false` | Deep North |
 
 #### Section: `6 - Specific Resources - Herbs and Plants`
 | Key | Type | Default | Biome / Notes |
@@ -302,6 +321,9 @@ ProximityScanInterval = 1.5
 | `Fiddlehead` | Boolean | `false` | Ashlands ferns |
 | `Barley` | Boolean | `false` | Plains Fuling villages |
 | `Flax` | Boolean | `false` | Plains Fuling villages |
+| `KaleSeeds` | Boolean | `false` | Deep North wild pickups |
+| `OatSeeds` | Boolean | `false` | Deep North wild pickups |
+| `TimberwoodCone` | Boolean | `false` | Dropped by Deep North Timberwood trees |
 
 #### Section: `7 - Specific Resources - Ores`
 | Key | Type | Default | Biome / Notes |
@@ -348,6 +370,7 @@ ProximityScanInterval = 1.5
 | `Raspberry` | Raspberries | Berries | Dot | 10m |
 | `Blueberry` | Blueberries | Berries | Dot | 10m |
 | `Cloudberry` | Cloudberries | Berries | Dot | 10m |
+| `Lingonberry` | Lingonberries | Berries | Dot | 10m |
 | `Thistle` | Thistle | HerbsAndPlants | Dot | 10m |
 | `Dandelion` | Dandelion | HerbsAndPlants | Dot | 10m |
 | `CarrotSeeds` | Carrot Seeds | HerbsAndPlants | Dot | 10m |
@@ -356,6 +379,9 @@ ProximityScanInterval = 1.5
 | `Fiddlehead` | Fiddlehead | HerbsAndPlants | Dot | 10m |
 | `Barley` | Barley | FarmingCrops | Dot | 10m |
 | `Flax` | Flax | FarmingCrops | Dot | 10m |
+| `KaleSeeds` | Kale Seeds | FarmingCrops | Dot | 10m |
+| `OatSeeds` | Oat Seeds | FarmingCrops | Dot | 10m |
+| `TimberwoodCone` | Timberwood Cone | FarmingCrops | Dot | 15m |
 | `Copper` | Copper | OresAndVeins | Hammer | 20m |
 | `Tin` | Tin | OresAndVeins | Hammer | 15m |
 | `Silver` | Silver | OresAndVeins | Hammer | 20m |
